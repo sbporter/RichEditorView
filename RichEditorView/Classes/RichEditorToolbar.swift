@@ -69,12 +69,12 @@ import UIKit
         set { backgroundToolbar.barTintColor = newValue }
     }
 
-    private var toolbarScroll: UIScrollView
+//    private var toolbarScroll: UIScrollView
     private var toolbar: UIToolbar
     private var backgroundToolbar: UIToolbar
     
     public override init(frame: CGRect) {
-        toolbarScroll = UIScrollView()
+//        toolbarScroll = UIScrollView()
         toolbar = UIToolbar()
         backgroundToolbar = UIToolbar()
         super.init(frame: frame)
@@ -82,7 +82,7 @@ import UIKit
     }
     
     public required init?(coder aDecoder: NSCoder) {
-        toolbarScroll = UIScrollView()
+//        toolbarScroll = UIScrollView()
         toolbar = UIToolbar()
         backgroundToolbar = UIToolbar()
         super.init(coder: aDecoder)
@@ -101,16 +101,16 @@ import UIKit
         toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
         toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
 
-        toolbarScroll.frame = bounds
-        toolbarScroll.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        toolbarScroll.showsHorizontalScrollIndicator = false
-        toolbarScroll.showsVerticalScrollIndicator = false
-        toolbarScroll.backgroundColor = .clear
+//        toolbarScroll.frame = bounds
+//        toolbarScroll.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+//        toolbarScroll.showsHorizontalScrollIndicator = false
+//        toolbarScroll.showsVerticalScrollIndicator = false
+//        toolbarScroll.backgroundColor = .clear
 
-        toolbarScroll.addSubview(toolbar)
+//        toolbarScroll.addSubview(toolbar)
 
         addSubview(backgroundToolbar)
-        addSubview(toolbarScroll)
+        addSubview(toolbar)
         updateToolbar()
     }
     
@@ -131,26 +131,33 @@ import UIKit
                 let button = RichBarButtonItem(title: title, handler: handler)
                 buttons.append(button)
             }
+            let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+            buttons.append(flexSpace)
+        }
+        if buttons.count > 1 {
+            buttons.removeLast()
         }
         toolbar.items = buttons
 
-        let defaultIconWidth: CGFloat = 28
-        let barButtonItemMargin: CGFloat = 11
-        let width: CGFloat = buttons.reduce(0) {sofar, new in
-            if let view = new.value(forKey: "view") as? UIView {
-                return sofar + view.frame.size.width + barButtonItemMargin
-            } else {
-                return sofar + (defaultIconWidth + barButtonItemMargin)
-            }
-        }
+//        let defaultIconWidth: CGFloat = 28
+//        let barButtonItemMargin: CGFloat = 11
+//        let width: CGFloat = buttons.reduce(0) {sofar, new in
+//            if let view = new.value(forKey: "view") as? UIView {
+//                return sofar + view.frame.size.width + barButtonItemMargin
+//            } else {
+//                return sofar + (defaultIconWidth + barButtonItemMargin)
+//            }
+//        }
         
-        if width < frame.size.width {
-            toolbar.frame.size.width = frame.size.width
-        } else {
-            toolbar.frame.size.width = width
-        }
+//        if width < frame.size.width {
+//            toolbar.frame.size.width = frame.size.width
+//        } else {
+//            toolbar.frame.size.width = width
+//        }
+        toolbar.frame.size.width = frame.size.width
+
         toolbar.frame.size.height = 44
-        toolbarScroll.contentSize.width = width
+//        toolbarScroll.contentSize.width = width
     }
     
 }
