@@ -24,24 +24,31 @@ import UIKit
     @objc optional func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar)
 }
 
-/// RichBarButtonItem is a subclass of UIBarButtonItem that takes a callback as opposed to the target-action pattern
-@objcMembers open class RichBarButtonItem: UIBarButtonItem {
+/// RichBarButton is a subclass of UIBarButtonItem that takes a callback as opposed to the target-action pattern
+@objcMembers open class RichBarButton: UIButton {
     open var actionHandler: (() -> Void)?
-    
+
     public convenience init(image: UIImage? = nil, handler: (() -> Void)? = nil) {
-        self.init(image: image, style: .plain, target: nil, action: nil)
-        target = self
-        action = #selector(RichBarButtonItem.buttonWasTapped)
+        self.init(frame: CGRect.zero)
+        setImage(image, for: .normal)
+        addTarget(self, action: #selector(RichBarButton.buttonWasTapped), for: .touchUpInside)
         actionHandler = handler
     }
     
-    public convenience init(title: String = "", handler: (() -> Void)? = nil) {
-        self.init(title: title, style: .plain, target: nil, action: nil)
-        target = self
-        action = #selector(RichBarButtonItem.buttonWasTapped)
-        actionHandler = handler
-    }
-    
+//    public convenience init(image: UIImage? = nil, handler: (() -> Void)? = nil) {
+//        self.init(image: image, style: .plain, target: nil, action: nil)
+//        target = self
+//        action = #selector(RichBarButton.buttonWasTapped)
+//        actionHandler = handler
+//    }
+//
+//    public convenience init(title: String = "", handler: (() -> Void)? = nil) {
+//        self.init(title: title, style: .plain, target: nil, action: nil)
+//        target = self
+//        action = #selector(RichBarButton.buttonWasTapped)
+//        actionHandler = handler
+//    }
+
     @objc func buttonWasTapped() {
         actionHandler?()
     }
@@ -65,26 +72,18 @@ import UIKit
 
     /// The tint color to apply to the toolbar background.
     open var barTintColor: UIColor? {
-        get { return backgroundToolbar.barTintColor }
-        set { backgroundToolbar.barTintColor = newValue }
+        get { return toolbarStackView.backgroundColor }
+        set { toolbarStackView.backgroundColor = newValue }
     }
 
-//    private var toolbarScroll: UIScrollView
-    private var toolbar: UIToolbar
-    private var backgroundToolbar: UIToolbar
-    
+    private var toolbarStackView = UIStackView()
+
     public override init(frame: CGRect) {
-//        toolbarScroll = UIScrollView()
-        toolbar = UIToolbar()
-        backgroundToolbar = UIToolbar()
         super.init(frame: frame)
         setup()
     }
     
     public required init?(coder aDecoder: NSCoder) {
-//        toolbarScroll = UIScrollView()
-        toolbar = UIToolbar()
-        backgroundToolbar = UIToolbar()
         super.init(coder: aDecoder)
         setup()
     }
@@ -93,29 +92,24 @@ import UIKit
         autoresizingMask = .flexibleWidth
         backgroundColor = .clear
 
-        backgroundToolbar.frame = bounds
-        backgroundToolbar.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        toolbarStackView.autoresizingMask = .flexibleWidth
+        toolbarStackView.backgroundColor = .clear
+        toolbarStackView.axis = .horizontal
+        toolbarStackView.alignment = .fill
+        toolbarStackView.distribution = .equalSpacing
+        toolbarStackView.layoutMargins = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        toolbarStackView.isLayoutMarginsRelativeArrangement = true
 
-        toolbar.autoresizingMask = .flexibleWidth
-        toolbar.backgroundColor = .clear
-        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
-        toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
-
-//        toolbarScroll.frame = bounds
-//        toolbarScroll.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-//        toolbarScroll.showsHorizontalScrollIndicator = false
-//        toolbarScroll.showsVerticalScrollIndicator = false
-//        toolbarScroll.backgroundColor = .clear
-
-//        toolbarScroll.addSubview(toolbar)
-
-        addSubview(backgroundToolbar)
-        addSubview(toolbar)
+        addSubview(toolbarStackView)
         updateToolbar()
     }
     
     private func updateToolbar() {
-        var buttons = [UIBarButtonItem]()
+        for arrangedSubview in toolbarStackView.arrangedSubviews {
+            toolbarStackView.removeArrangedSubview(arrangedSubview)
+            arrangedSubview.removeFromSuperview()
+        }
+
         for option in options {
             let handler = { [weak self] in
                 if let strongSelf = self {
@@ -124,40 +118,14 @@ import UIKit
             }
 
             if let image = option.image {
-                let button = RichBarButtonItem(image: image, handler: handler)
-                buttons.append(button)
-            } else {
-                let title = option.title
-                let button = RichBarButtonItem(title: title, handler: handler)
-                buttons.append(button)
+                let button = RichBarButton(image: image, handler: handler)
+                toolbarStackView.addArrangedSubview(button)
             }
-            let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-            buttons.append(flexSpace)
         }
-        if buttons.count > 1 {
-            buttons.removeLast()
-        }
-        toolbar.items = buttons
 
-//        let defaultIconWidth: CGFloat = 28
-//        let barButtonItemMargin: CGFloat = 11
-//        let width: CGFloat = buttons.reduce(0) {sofar, new in
-//            if let view = new.value(forKey: "view") as? UIView {
-//                return sofar + view.frame.size.width + barButtonItemMargin
-//            } else {
-//                return sofar + (defaultIconWidth + barButtonItemMargin)
-//            }
-//        }
-        
-//        if width < frame.size.width {
-//            toolbar.frame.size.width = frame.size.width
-//        } else {
-//            toolbar.frame.size.width = width
-//        }
-        toolbar.frame.size.width = frame.size.width
+        toolbarStackView.frame.size.width = frame.size.width
 
-        toolbar.frame.size.height = 44
-//        toolbarScroll.contentSize.width = width
+        toolbarStackView.frame.size.height = 44
     }
     
 }
