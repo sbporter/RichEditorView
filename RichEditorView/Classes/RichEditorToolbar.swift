@@ -77,6 +77,7 @@ import UIKit
     }
 
     private var toolbarStackView = UIStackView()
+    private var dividerLineView = UIView()
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -99,6 +100,12 @@ import UIKit
         toolbarStackView.distribution = .equalSpacing
         toolbarStackView.layoutMargins = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         toolbarStackView.isLayoutMarginsRelativeArrangement = true
+
+        dividerLineView.backgroundColor = UIColor(red: 145.0 / 255.0, green: 145.0 / 255.0, blue: 145.0 / 255.0, alpha: 1.0)
+        dividerLineView.frame.size.height = 0.5
+        dividerLineView.frame.origin = frame.origin
+        dividerLineView.autoresizingMask = [.flexibleWidth]
+        toolbarStackView.addSubview(dividerLineView)
 
         addSubview(toolbarStackView)
         updateToolbar()
@@ -127,5 +134,4 @@ import UIKit
 
         toolbarStackView.frame.size.height = 44
     }
-    
 }
