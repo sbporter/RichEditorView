@@ -176,11 +176,11 @@ import UIKit
             return runJS("RE.getHtml();")
         }
         set {
-            contentHTML = newValue
             if isEditorLoaded {
                 runJS("RE.setHtml('\(newValue.escaped)');")
                 updateHeight()
             }
+            contentHTML = newValue
         }
     }
 
