@@ -143,12 +143,14 @@ import UIKit
         webView.scalesPageToFit = false
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         webView.dataDetectorTypes = UIDataDetectorTypes()
-        webView.backgroundColor = .white
-        
+        webView.backgroundColor = .clear
+        webView.isOpaque = false
+
         webView.scrollView.isScrollEnabled = isScrollEnabled
         webView.scrollView.bounces = false
         webView.scrollView.delegate = self
         webView.scrollView.clipsToBounds = false
+        webView.scrollView.backgroundColor = .white
         
         webView.cjw_inputAccessoryView = nil
         
