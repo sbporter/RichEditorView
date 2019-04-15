@@ -147,7 +147,7 @@ import UIKit
         webView.isOpaque = false
 
         webView.scrollView.isScrollEnabled = isScrollEnabled
-        webView.scrollView.bounces = false
+        webView.scrollView.bounces = true
         webView.scrollView.delegate = self
         webView.scrollView.clipsToBounds = false
         webView.scrollView.backgroundColor = .white
