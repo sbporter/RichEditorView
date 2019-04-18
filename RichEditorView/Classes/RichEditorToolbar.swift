@@ -80,12 +80,12 @@ import UIKit
         super.init(frame: frame)
         setup()
     }
-    
+
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-    
+
     private func setup() {
         autoresizingMask = .flexibleWidth
 
@@ -113,20 +113,24 @@ import UIKit
         dividerLineView.autoresizingMask = [.flexibleWidth]
         toolbarStackView.addSubview(dividerLineView)
 
-        dismissButton.frame.size = dismissButtonSize
         let dismissImage = UIImage(named: "down", in: Bundle(for: RichEditorToolbar.self), compatibleWith: nil)
+
+        dismissButton.translatesAutoresizingMaskIntoConstraints = false
+        dismissButton.frame.size = dismissButtonSize
         dismissButton.setImage(dismissImage, for: .normal)
         dismissButton.contentHorizontalAlignment = .fill
         dismissButton.contentVerticalAlignment = .fill
         dismissButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
         dismissButton.imageView?.contentMode = .scaleAspectFit
-        dismissButton.frame.origin = CGPoint(x: frame.width - dismissButtonSize.width - dismissButtonInset, y: frame.origin.y)
         addSubview(dismissButton)
+
+        dismissButton.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor, constant: 5).isActive = true
+        dismissButton.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor).isActive = true
 
         addSubview(toolbarStackView)
         updateToolbar()
     }
-    
+
     private func updateToolbar() {
         for arrangedSubview in toolbarStackView.arrangedSubviews {
             toolbarStackView.removeArrangedSubview(arrangedSubview)
