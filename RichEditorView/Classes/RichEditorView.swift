@@ -553,6 +553,7 @@ import UIKit
 
     open override func resignFirstResponder() -> Bool {
         blur()
+        super.resignFirstResponder()
         return true
     }
 

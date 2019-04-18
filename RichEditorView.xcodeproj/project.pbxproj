@@ -69,6 +69,9 @@
 		4B560769225416A900F0319C /* h3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B560751225416A900F0319C /* h3@2x.png */; };
 		4B56076A225416A900F0319C /* italic.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B560752225416A900F0319C /* italic.png */; };
 		4B56076B225416A900F0319C /* underline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B560753225416A900F0319C /* underline@2x.png */; };
+		4B87F3202269093E00ED6BDC /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B87F31D2269093D00ED6BDC /* down.png */; };
+		4B87F3212269093E00ED6BDC /* down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B87F31E2269093D00ED6BDC /* down@2x.png */; };
+		4B87F3222269093E00ED6BDC /* down@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B87F31F2269093D00ED6BDC /* down@3x.png */; };
 		947A71A11C0F9DED00BDF9FC /* UIView+Responder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947A71A01C0F9DED00BDF9FC /* UIView+Responder.swift */; };
 		FBA6AAFF1AD3EC9F00721644 /* RichEditorView.h in Headers */ = {isa = PBXBuildFile; fileRef = FBA6AAFE1AD3EC9F00721644 /* RichEditorView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FBA6AB051AD3EC9F00721644 /* RichEditorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBA6AAF91AD3EC9F00721644 /* RichEditorView.framework */; };
@@ -158,6 +161,9 @@
 		4B560751225416A900F0319C /* h3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "h3@2x.png"; sourceTree = "<group>"; };
 		4B560752225416A900F0319C /* italic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = italic.png; sourceTree = "<group>"; };
 		4B560753225416A900F0319C /* underline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "underline@2x.png"; sourceTree = "<group>"; };
+		4B87F31D2269093D00ED6BDC /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
+		4B87F31E2269093D00ED6BDC /* down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down@2x.png"; sourceTree = "<group>"; };
+		4B87F31F2269093D00ED6BDC /* down@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "down@3x.png"; sourceTree = "<group>"; };
 		947A71A01C0F9DED00BDF9FC /* UIView+Responder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Responder.swift"; path = "Classes/UIView+Responder.swift"; sourceTree = "<group>"; };
 		FBA6AAF91AD3EC9F00721644 /* RichEditorView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RichEditorView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBA6AAFD1AD3EC9F00721644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -262,6 +268,9 @@
 				4B5606E22254165000F0319C /* text_color@2x.png */,
 				4B5606EB2254165000F0319C /* undo.png */,
 				4B5606F52254165100F0319C /* undo@2x.png */,
+				4B87F31D2269093D00ED6BDC /* down.png */,
+				4B87F31E2269093D00ED6BDC /* down@2x.png */,
+				4B87F31F2269093D00ED6BDC /* down@3x.png */,
 			);
 			name = icons;
 			path = Assets/icons;
@@ -457,6 +466,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B87F3212269093E00ED6BDC /* down@2x.png in Resources */,
 				4B560756225416A900F0319C /* underline@3x.png in Resources */,
 				4B560760225416A900F0319C /* ordered_list@2x.png in Resources */,
 				4B5607142254165500F0319C /* outdent@2x.png in Resources */,
@@ -465,6 +475,7 @@
 				4B560765225416A900F0319C /* h1.png in Resources */,
 				4B56070D2254165500F0319C /* superscript@2x.png in Resources */,
 				4B5607252254165500F0319C /* undo@2x.png in Resources */,
+				4B87F3202269093E00ED6BDC /* down.png in Resources */,
 				4B5607202254165500F0319C /* bg_color.png in Resources */,
 				4B560759225416A900F0319C /* h2@2x.png in Resources */,
 				4B560768225416A900F0319C /* unordered_list@2x.png in Resources */,
@@ -494,6 +505,7 @@
 				4B56070F2254165500F0319C /* h5.png in Resources */,
 				4B56072F2254165500F0319C /* insert_image.png in Resources */,
 				4B5607312254165500F0319C /* insert_image@2x.png in Resources */,
+				4B87F3222269093E00ED6BDC /* down@3x.png in Resources */,
 				4B5607272254165500F0319C /* h6.png in Resources */,
 				4B56071B2254165500F0319C /* undo.png in Resources */,
 				4B56070E2254165500F0319C /* text_color.png in Resources */,

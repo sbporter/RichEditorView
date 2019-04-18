@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet var htmlTextView: UITextView!
 
     lazy var toolbar: RichEditorToolbar = {
-        let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
+        let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 74))
         toolbar.options = RichEditorDefaultOption.all
         return toolbar
     }()
@@ -30,6 +30,8 @@ class ViewController: UIViewController {
         toolbar.delegate = self
         toolbar.editor = editorView
 
+        toolbar.dismissButton.addTarget(self, action: #selector(dismissKeyboard), for: .touchUpInside)
+
         // We will create a custom action that clears all the input text when it is pressed
         let item = RichEditorOptionItem(image: nil, title: "Clear") { toolbar in
             toolbar.editor?.html = ""
@@ -40,7 +42,11 @@ class ViewController: UIViewController {
         toolbar.options = options
     }
 
+    @objc func dismissKeyboard() {
+        editorView.resignFirstResponder()
+    }
 }
+
 
 extension ViewController: RichEditorDelegate {
 

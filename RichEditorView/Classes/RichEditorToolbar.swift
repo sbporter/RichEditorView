@@ -34,20 +34,6 @@ import UIKit
         addTarget(self, action: #selector(RichBarButton.buttonWasTapped), for: .touchUpInside)
         actionHandler = handler
     }
-    
-//    public convenience init(image: UIImage? = nil, handler: (() -> Void)? = nil) {
-//        self.init(image: image, style: .plain, target: nil, action: nil)
-//        target = self
-//        action = #selector(RichBarButton.buttonWasTapped)
-//        actionHandler = handler
-//    }
-//
-//    public convenience init(title: String = "", handler: (() -> Void)? = nil) {
-//        self.init(title: title, style: .plain, target: nil, action: nil)
-//        target = self
-//        action = #selector(RichBarButton.buttonWasTapped)
-//        actionHandler = handler
-//    }
 
     @objc func buttonWasTapped() {
         actionHandler?()
@@ -76,8 +62,19 @@ import UIKit
         set { toolbarStackView.backgroundColor = newValue }
     }
 
+    // Views
+    private let backingView = UIView()
+    private let gradientView = GradientView()
     private var toolbarStackView = UIStackView()
     private var dividerLineView = UIView()
+    public let dismissButton = UIButton(type: .custom)
+
+    // Constants
+    private let gradientHeight: CGFloat = 10
+    private let dismissButtonSize: CGSize = CGSize(width: 25, height: 25)
+    private let dismissButtonInset: CGFloat = 5
+    private let toolbarHeight: CGFloat = 44
+
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -91,10 +88,19 @@ import UIKit
     
     private func setup() {
         autoresizingMask = .flexibleWidth
+
         backgroundColor = .clear
 
+        backingView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        backingView.backgroundColor = .white
+        addSubview(backingView)
+
+        gradientView.autoresizingMask = [.flexibleWidth]
+        gradientView.frame.size.height = gradientHeight
+        gradientView.backgroundColor = .clear
+        addSubview(gradientView)
+
         toolbarStackView.autoresizingMask = .flexibleWidth
-        toolbarStackView.backgroundColor = .clear
         toolbarStackView.axis = .horizontal
         toolbarStackView.alignment = .fill
         toolbarStackView.distribution = .equalSpacing
@@ -106,6 +112,16 @@ import UIKit
         dividerLineView.frame.origin = frame.origin
         dividerLineView.autoresizingMask = [.flexibleWidth]
         toolbarStackView.addSubview(dividerLineView)
+
+        dismissButton.frame.size = dismissButtonSize
+        let dismissImage = UIImage(named: "down", in: Bundle(for: RichEditorToolbar.self), compatibleWith: nil)
+        dismissButton.setImage(dismissImage, for: .normal)
+        dismissButton.contentHorizontalAlignment = .fill
+        dismissButton.contentVerticalAlignment = .fill
+        dismissButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        dismissButton.imageView?.contentMode = .scaleAspectFit
+        dismissButton.frame.origin = CGPoint(x: frame.width - dismissButtonSize.width - dismissButtonInset, y: frame.origin.y)
+        addSubview(dismissButton)
 
         addSubview(toolbarStackView)
         updateToolbar()
@@ -130,8 +146,52 @@ import UIKit
             }
         }
 
+        gradientView.frame.origin = frame.origin
+        gradientView.frame = CGRect(origin: frame.origin, size: CGSize(width: frame.width, height: gradientHeight))
+
+        backingView.frame = CGRect(origin: CGPoint(x: frame.origin.x, y: frame.origin.y + gradientHeight), size: CGSize(width: frame.width, height: frame.height - gradientHeight))
         toolbarStackView.frame.size.width = frame.size.width
 
-        toolbarStackView.frame.size.height = 44
+        toolbarStackView.frame.size.height = toolbarHeight
+        toolbarStackView.frame.origin = CGPoint(x: frame.origin.x, y: frame.origin.y + dismissButtonSize.width + dismissButtonInset)
+    }
+}
+
+final class GradientView: UIView {
+    // MARK: -
+    // MARK: Lifecycle
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        finishInit()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        finishInit()
+    }
+
+    fileprivate func finishInit() {
+        isOpaque = false
+        backgroundColor = UIColor.clear
+    }
+
+    // MARK: -
+    // MARK: UIView
+    override func draw(_ rect: CGRect) {
+        let context = UIGraphicsGetCurrentContext()
+        let colorspace = CGColorSpaceCreateDeviceRGB()
+        let components: [CGFloat] = [
+            1, 1, 1, 0.00,
+            1, 1, 1, 1.00
+        ]
+        let locations: [CGFloat] = [
+            0.0, 1.0
+        ]
+        let numberOfLocations = 2
+        guard let gradient = CGGradient(colorSpace: colorspace, colorComponents: components, locations: locations, count: numberOfLocations) else {
+            print("Unable to allocate gradient")
+            return
+        }
+        context?.drawLinearGradient(gradient, start: CGPoint.zero, end: CGPoint(x: 0, y: bounds.maxY), options: [])
     }
 }
